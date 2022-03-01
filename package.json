@@ -1,5 +1,5 @@
 {
-	"name": "minecraftserver",
+	"name": "mcservermanager",
 	"version": "1.0.1",
 	"description": "A npm api to manage the Minecraft Server Process and handle all kinds of stuff with it",
 	"main": "index.js",
