@@ -2,7 +2,11 @@ class ServerProperties {
 
     /**
      * @typedef {Object} ServerObjectProperties
-     * @property {Number=} viewDistance
+     * @property {Number=} viewDistance=10
+     * @property {Number=} maxBuildHeight=256
+     * @property {Boolean=} allowNether=true
+     * @property {Number=} port=25565
+     * @property {Number=} maxPlayers=20
      * 
      */
 
@@ -17,12 +21,12 @@ class ServerProperties {
         return `
                 #Minecraft server properties
                 #Sun Feb 27 15:19:00 CET 2022
-                view-distance=10
-                max-build-height=256
+                view-distance=${this.properties.viewDistance || 10}
+                max-build-height=${this.properties.maxBuildHeight || 256}
                 server-ip=
                 level-seed=
-                allow-nether=true
-                server-port=25565
+                allow-nether=${Boolean(this.properties.allowNether)}
+                server-port=${this.properties.port || 25565}
                 enable-command-block=false
                 gamemode=0
                 enable-rcon=false
@@ -46,7 +50,7 @@ class ServerProperties {
                 network-compression-threshold=256
                 level-type=DEFAULT
                 spawn-monsters=true
-                max-players=20
+                max-players=${this.properties.maxPlayers || 20}
                 spawn-protection=16
                 online-mode=true
                 allow-flight=false
