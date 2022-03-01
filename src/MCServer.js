@@ -1,4 +1,7 @@
+const fs = require('fs')
+const path = require('path');
 const execute = require('child_process').exec;
+const ServerProperties = require('./ServerProperties');
 
 const command = 'java -jar spigot.jar';
 class MCServer {
@@ -6,12 +9,20 @@ class MCServer {
     /**
      * @param  {String} name the servers referencing name
      * @param  {String} cwd='./CloudData/spigot-Server'
-     * @param  {Object} serverProperties the server.properties
+     * @param  {import('./ServerProperties').ServerObjectProperties} serverProperties the server.properties
      */
     constructor(name, cwd = './CloudData/spigot-Server', serverProperties = {}) {
         this.name = name;
         this.cwd = cwd;
+        /**
+         * @type {ServerProperties}
+         */
+        this.serverProperties = new ServerProperties(serverProperties);
         this.logs = [];
+    }
+
+    init() {
+        fs.writeFileSync(path.join(this.cwd, 'server.properties'), this.serverProperties.out());
     }
 
     listenForLog() {

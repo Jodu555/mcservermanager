@@ -1,15 +1,13 @@
+/**
+ * @typedef {Object} ServerObjectProperties
+ * @property {Number=} viewDistance=10
+ * @property {Number=} maxBuildHeight=256
+ * @property {Boolean=} allowNether=true
+ * @property {Number=} port=25565
+ * @property {Number=} maxPlayers=20
+ * 
+ */
 class ServerProperties {
-
-    /**
-     * @typedef {Object} ServerObjectProperties
-     * @property {Number=} viewDistance=10
-     * @property {Number=} maxBuildHeight=256
-     * @property {Boolean=} allowNether=true
-     * @property {Number=} port=25565
-     * @property {Number=} maxPlayers=20
-     * 
-     */
-
     /**
      * @param  {ServerObjectProperties} properties
      */
