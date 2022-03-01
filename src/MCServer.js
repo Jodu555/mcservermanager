@@ -19,23 +19,29 @@ class MCServer {
          */
         this.serverProperties = new ServerProperties(serverProperties);
         this.logs = [];
+        this.stopped = false;
     }
 
     init() {
         fs.writeFileSync(path.join(this.cwd, 'server.properties'), this.serverProperties.out());
     }
 
-    listenForLog() {
+    addListeners() {
         this.process.stdout.on('data', (data) => {
             data = data.toString().split(/(\r?\n)/g);
-            data.forEach((item, index) => {
+            data.forEach((_, index) => {
                 var line = data[index].trim();
                 if (line !== '\n' && line !== '') {
-                    // console.log('Console Output: "', data[index].trim(), '"');
-                    this.logs.push(data[index].trim());
+                    this.logs.push(line);
                 }
             });
         });
+        const stop = () => {
+            //The Server Stopped either normal or unnormal
+            this.stopped = true;
+        }
+        this.process.on('close', stop);
+        this.process.on('exit', stop);
     }
     /**
      * @param  {String} command the command
@@ -65,7 +71,7 @@ class MCServer {
         });
 
         try {
-            this.listenForLog();
+            this.addListeners();
         } catch (error) {
             console.log('Error catched!');
             console.error(error);
