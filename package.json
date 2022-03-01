@@ -1,0 +1,20 @@
+{
+	"name": "minecraftserver",
+	"version": "1.0.1",
+	"description": "A npm api to manage the Minecraft Server Process and handle all kinds of stuff with it",
+	"main": "index.js",
+	"scripts": {
+		"test": "test.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Jodu555/mcservermanager.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Jodu555/mcservermanager/issues"
+	},
+	"homepage": "https://github.com/Jodu555/mcservermanager#readme"
+}
