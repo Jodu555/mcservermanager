@@ -1,7 +1,10 @@
-const MCServer = require("./src/MCServer");
-const ServerProperties = require("./src/ServerProperties");
+// const MCServer = require("./src/MCServer");
+// const ServerProperties = require("./src/ServerProperties");
 
 
-new ServerProperties({})
+// new ServerProperties({})
 
-const server = new MCServer('Lobby-1', null, { por });
+// const server = new MCServer('Lobby-1', null, { por });
+
+
+createMCServerManager()

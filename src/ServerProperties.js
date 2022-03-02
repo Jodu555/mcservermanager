@@ -10,6 +10,7 @@
  * @property {Boolean=} pvp=true
  * @property {Number=} maxPlayers=20
  * @property {Boolean=} onlineMode=true
+ * @property {Boolean=} allowFlight=false
  * 
  */
 
@@ -27,6 +28,7 @@ const defaultProperties = {
     pvp: true,
     maxPlayers: 20,
     onlineMode: true,
+    allowFlight: false
 };
 
 class ServerProperties {
@@ -73,7 +75,7 @@ class ServerProperties {
                 max-players=${this.properties.maxPlayers}
                 spawn-protection=16
                 online-mode=${this.properties.onlineMode}
-                allow-flight=false
+                allow-flight=${this.properties.allowFlight}
                 resource-pack-hash=
                 max-world-size=29999984
         `
