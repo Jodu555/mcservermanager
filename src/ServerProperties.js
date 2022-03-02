@@ -4,11 +4,11 @@
  * @property {Number=} maxBuildHeight=256
  * @property {Boolean=} allowNether=true
  * @property {Number=} port=25565
- * @property {Number=} maxPlayers=20
  * @property {Boolean=} enableCommandBlock=false
  * @property {String=} motd="A Minecraft Server"
  * @property {Boolean=} whiteList=false
  * @property {Boolean=} pvp=true
+ * @property {Number=} maxPlayers=20
  * 
  */
 
@@ -20,11 +20,11 @@ const defaultProperties = {
     maxBuildHeight: 256,
     allowNether: true,
     port: 25565,
-    maxPlayers: 20,
     enableCommandBlock: false,
     motd: 'A Minecraft Server',
     whiteList: false,
-    pvp: true
+    pvp: true,
+    maxPlayers: 20,
 };
 
 class ServerProperties {
