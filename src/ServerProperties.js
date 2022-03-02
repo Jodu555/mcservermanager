@@ -5,6 +5,8 @@
  * @property {Boolean=} allowNether=true
  * @property {Number=} port=25565
  * @property {Number=} maxPlayers=20
+ * @property {Boolean=} enableCommandBlock=false
+ * @property {String=} motd="A Minecraft Server"
  * 
  */
 class ServerProperties {
@@ -25,7 +27,7 @@ class ServerProperties {
                 level-seed=
                 allow-nether=${Boolean(this.properties.allowNether)}
                 server-port=${this.properties.port || 25565}
-                enable-command-block=false
+                enable-command-block=${Boolean(this.properties.enableCommandBlock)}
                 gamemode=0
                 enable-rcon=false
                 op-permission-level=4
@@ -34,7 +36,7 @@ class ServerProperties {
                 resource-pack=
                 level-name=world
                 player-idle-timeout=0
-                motd=A Minecraft Server
+                motd=${this.properties.motd || 'A Minecraft Server'}
                 announce-player-achievements=true
                 force-gamemode=false
                 hardcore=false
