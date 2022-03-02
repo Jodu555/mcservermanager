@@ -9,6 +9,7 @@
  * @property {Boolean=} whiteList=false
  * @property {Boolean=} pvp=true
  * @property {Number=} maxPlayers=20
+ * @property {Boolean=} onlineMode=true
  * 
  */
 
@@ -25,6 +26,7 @@ const defaultProperties = {
     whiteList: false,
     pvp: true,
     maxPlayers: 20,
+    onlineMode: true,
 };
 
 class ServerProperties {
@@ -70,7 +72,7 @@ class ServerProperties {
                 spawn-monsters=true
                 max-players=${this.properties.maxPlayers}
                 spawn-protection=16
-                online-mode=true
+                online-mode=${this.properties.onlineMode}
                 allow-flight=false
                 resource-pack-hash=
                 max-world-size=29999984
