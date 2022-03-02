@@ -4,7 +4,7 @@
 	"description": "A npm api to manage the Minecraft Server Process and handle all kinds of stuff with it",
 	"main": "index.js",
 	"scripts": {
-		"test": "test.js"
+		"test": "node test.js"
 	},
 	"repository": {
 		"type": "git",

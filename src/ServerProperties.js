@@ -11,12 +11,28 @@
  * @property {Boolean=} pvp=true
  * 
  */
+
+/**
+ * @type {ServerObjectProperties}
+ */
+const defaultProperties = {
+    viewDistance: 10,
+    maxBuildHeight: 256,
+    allowNether: true,
+    port: 25565,
+    maxPlayers: 20,
+    enableCommandBlock: false,
+    motd: 'A Minecraft Server',
+    whiteList: false,
+    pvp: true
+};
+
 class ServerProperties {
     /**
      * @param  {ServerObjectProperties} properties
      */
     constructor(properties) {
-        this.properties = properties;
+        this.properties = { ...properties, ...defaultProperties };
     }
 
     out() {
@@ -27,9 +43,9 @@ class ServerProperties {
                 max-build-height=${this.properties.maxBuildHeight}
                 server-ip=
                 level-seed=
-                allow-nether=${Boolean(this.properties.allowNether)}
+                allow-nether=${this.properties.allowNether}
                 server-port=${this.properties.port}
-                enable-command-block=${Boolean(this.properties.enableCommandBlock)}
+                enable-command-block=${this.properties.enableCommandBlock}
                 gamemode=0
                 enable-rcon=false
                 op-permission-level=4
@@ -42,8 +58,8 @@ class ServerProperties {
                 announce-player-achievements=true
                 force-gamemode=false
                 hardcore=false
-                white-list=${Boolean(this.properties.whiteList)}
-                pvp=${Boolean(this.properties.pvp)}
+                white-list=${this.properties.whiteList}
+                pvp=${this.properties.pvp}
                 spawn-npcs=true
                 spawn-animals=true
                 generate-structures=true
