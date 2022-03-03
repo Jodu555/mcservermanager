@@ -10,14 +10,16 @@ class MCServer {
      * @param  {String} name the servers referencing name
      * @param  {String} cwd='./CloudData/spigot-Server'
      * @param  {import('./ServerProperties').ServerObjectProperties} serverProperties the server.properties
+     * @param  {String} startupParameters the server.properties
      */
-    constructor(name, cwd = './CloudData/spigot-Server', serverProperties = {}) {
+    constructor(name, cwd = './CloudData/spigot-Server', serverProperties = {}, startupParameters) {
         this.name = name;
         this.cwd = cwd;
         /**
          * @type {ServerProperties}
          */
         this.serverProperties = new ServerProperties(serverProperties);
+        this.startupParameters = startupParameters;
         this.logs = [];
         this.stopped = false;
     }
@@ -56,7 +58,7 @@ class MCServer {
     }
 
     start() {
-        this.process = execute(command, { cwd: this.cwd }, (err, stdout, stderr) => {
+        this.process = execute(command + this.startupParameters, { cwd: this.cwd }, (err, stdout, stderr) => {
             if (err) {
                 console.error('Server:start Error: ', err);
                 return;
