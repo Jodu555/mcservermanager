@@ -8,6 +8,7 @@
  * @property {String=} motd="A Minecraft Server"
  * @property {Boolean=} whiteList=false
  * @property {Boolean=} pvp=true
+ * @property {Boolean=} spawnMonsters=true
  * @property {Number=} maxPlayers=20
  * @property {Boolean=} onlineMode=true
  * @property {Boolean=} allowFlight=false
@@ -28,7 +29,8 @@ const defaultProperties = {
     pvp: true,
     maxPlayers: 20,
     onlineMode: true,
-    allowFlight: false
+    allowFlight: false,
+    spawnMonsters: true,
 };
 
 class ServerProperties {
@@ -71,7 +73,7 @@ class ServerProperties {
                 difficulty=1
                 network-compression-threshold=256
                 level-type=DEFAULT
-                spawn-monsters=true
+                spawn-monsters=${this.properties.spawnMonsters}
                 max-players=${this.properties.maxPlayers}
                 spawn-protection=16
                 online-mode=${this.properties.onlineMode}
