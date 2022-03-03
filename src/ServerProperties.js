@@ -38,7 +38,7 @@ class ServerProperties {
      * @param  {ServerObjectProperties} properties
      */
     constructor(properties) {
-        this.properties = { ...properties, ...defaultProperties };
+        this.properties = { ...defaultProperties, ...properties };
     }
 
     out() {
