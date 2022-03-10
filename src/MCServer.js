@@ -8,7 +8,7 @@ class MCServer {
 
     /**
      * @param  {String} name the servers referencing name
-     * @param  {String} cwd='./CloudData/spigot-Server'
+     * @param  {String} cwd='.path.join(process.cwd(), 'CloudData/spigot-Server')'
      * @param  {import('./ServerProperties').ServerObjectProperties} serverProperties the server.properties
      * @param  {String} startupParameters the server.properties
      */
