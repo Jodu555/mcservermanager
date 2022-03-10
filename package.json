@@ -16,5 +16,8 @@
 	"bugs": {
 		"url": "https://github.com/Jodu555/mcservermanager/issues"
 	},
-	"homepage": "https://github.com/Jodu555/mcservermanager#readme"
+	"homepage": "https://github.com/Jodu555/mcservermanager#readme",
+	"dependencies": {
+		"axios": "^0.26.1"
+	}
 }

@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const axios = require('axios');
 
 
@@ -31,8 +32,8 @@ class Version {
         this.javaVersion = javaVersion;
     }
 
-    download(url, path) {
-        const writer = fs.createWriteStream(path)
+    download(url, location) {
+        const writer = fs.createWriteStream(path.join(location, 'spigot.jar'))
         axios.get(url, { responseType: 'stream' }).then(response => {
             return new Promise((resolve, reject) => {
                 response.data.pipe(writer);
@@ -52,4 +53,4 @@ class Version {
     }
 }
 
-module.exports = VersionManager;
+module.exports = { VersionManager, Version };
