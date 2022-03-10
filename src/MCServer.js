@@ -12,7 +12,7 @@ class MCServer {
      * @param  {import('./ServerProperties').ServerObjectProperties} serverProperties the server.properties
      * @param  {String} startupParameters the server.properties
      */
-    constructor(name, cwd = './CloudData/spigot-Server', serverProperties = {}, startupParameters) {
+    constructor(name, cwd = path.join(process.cwd(), 'CloudData/spigot-Server'), serverProperties = {}, startupParameters) {
         this.name = name;
         this.cwd = cwd;
         /**
@@ -25,6 +25,8 @@ class MCServer {
     }
 
     init() {
+        fs.mkdirSync(this.cwd, { recursive: true });
+        this.createEula();
         fs.writeFileSync(path.join(this.cwd, 'server.properties'), this.serverProperties.out());
     }
 
@@ -78,6 +80,9 @@ class MCServer {
             console.log('Error catched!');
             console.error(error);
         }
+    }
+    createEula() {
+        fs.writeFileSync(path.join(this.cwd, 'eula.txt'), 'eula=true', 'utf-8');
     }
 }
 
