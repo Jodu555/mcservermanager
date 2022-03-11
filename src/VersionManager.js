@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
+const { executeCommand } = require('./utils');
 
 
 
@@ -40,8 +41,10 @@ class VersionManager {
 
     }
 
-    checkIfJavaVersionIsInstalled(version) {
+    async checkIfJavaVersionIsInstalled(version) {
+        const lines = await executeCommand(process.cwd(), `sdk list java | grep installed`);
 
+        lines.find()
     }
 
 }
