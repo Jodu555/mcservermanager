@@ -3,8 +3,6 @@ const path = require('path');
 const execute = require('child_process').exec;
 const ServerProperties = require('./ServerProperties');
 const { Version } = require('./VersionManager');
-
-const command = 'java -jar spigot.jar';
 class MCServer {
 
     /**
@@ -25,15 +23,23 @@ class MCServer {
         this.startupParameters = startupParameters;
         this.logs = [];
         this.stopped = false;
+        this.command = `java -jar ${this.version.toNiceName()}`
     }
 
-    init() {
+    async init() {
         fs.mkdirSync(this.cwd, { recursive: true });
         this.createEula();
         fs.writeFileSync(path.join(this.cwd, 'server.properties'), this.serverProperties.out());
 
+        if (fs.existsSync(path.join(this.cwd, this.version.toNiceName())))
+            return;
+
         if (this.version.versionmanager.folder == null) {
-            this.version.download(this.cwd);
+            await this.version.download(this.cwd);
+        } else {
+            const folder = this.version.versionmanager.folder;
+            await this.version.download(folder);
+            fs.copyFileSync(path.join(folder, this.version.toNiceName()), path.join(this.cwd, this.version.toNiceName()));
         }
 
     }
@@ -68,7 +74,7 @@ class MCServer {
     }
 
     start() {
-        this.process = execute(command + this.startupParameters, { cwd: this.cwd }, (err, stdout, stderr) => {
+        this.process = execute(this.command + this.startupParameters, { cwd: this.cwd }, (err, stdout, stderr) => {
             if (err) {
                 console.error('Server:start Error: ', err);
                 return;

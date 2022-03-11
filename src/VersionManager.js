@@ -3,8 +3,6 @@ const path = require('path');
 const axios = require('axios');
 const { executeCommand } = require('./utils');
 
-
-
 const javaVersions = {
     8: '8.0.302-open',
     17: '17.0.2-open'
@@ -89,9 +87,21 @@ class Version {
         }
     }
 
+    toNiceName() {
+        return `${this.type}-${this.version}`;
+    }
+
     async download(location) {
+        const name = this.toNiceName();
+
+        const dlPath = path.join(location, name)
+
+        if (fs.existsSync(dlPath))
+            return;
+
+
         const url = await this.generateDownloadURL();
-        const writer = fs.createWriteStream(path.join(location, 'spigot.jar'))
+        const writer = fs.createWriteStream(dlPath)
         const response = await axios.get(url, { responseType: 'stream' })
         response.data.pipe(writer);
         let error = null;
