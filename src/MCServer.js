@@ -21,12 +21,20 @@ class MCServer {
          */
         this.serverProperties = new ServerProperties(serverProperties);
         this.startupParameters = startupParameters;
+
+
         this.logs = [];
         this.stopped = false;
         this.command = `java -jar ${this.version.toNiceName()}`
+        this.initialized = false;
+
     }
 
     async init() {
+        if (this.initialized)
+            return;
+
+        this.initialized = true;
         fs.mkdirSync(this.cwd, { recursive: true });
         this.createEula();
         fs.writeFileSync(path.join(this.cwd, 'server.properties'), this.serverProperties.out());
@@ -73,7 +81,8 @@ class MCServer {
         this.process.kill('SIGINT');
     }
 
-    start() {
+    async start() {
+        await this.init();
         this.process = execute(this.command + this.startupParameters, { cwd: this.cwd }, (err, stdout, stderr) => {
             if (err) {
                 console.error('Server:start Error: ', err);
