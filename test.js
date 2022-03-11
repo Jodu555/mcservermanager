@@ -2,11 +2,7 @@ const MCServer = require("./src/MCServer");
 const ServerProperties = require("./src/ServerProperties");
 const { VersionManager, Version } = require("./src/VersionManager");
 
-
-// // const props = new ServerProperties({ motd: 'Test123', allowFlight: true });
-// // console.log(props.out());
-
-const veM = new VersionManager('test');
+const veM = new VersionManager();
 
 // veM.get('spigot', '1.18.1');
 // veM.get('spigot', '1.18');
@@ -30,9 +26,10 @@ const url = v.generateDownloadURL();
 console.log(url);
 
 
-// const server = new MCServer('Test123', undefined, {
-//     port: 3737,
-// })
+const server = new MCServer('Test123', veM.get('spigot', '1.8.8'), undefined, {
+    port: 3737,
+})
+
 
 // server.init();
 

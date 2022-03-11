@@ -2,18 +2,21 @@ const fs = require('fs')
 const path = require('path');
 const execute = require('child_process').exec;
 const ServerProperties = require('./ServerProperties');
+const { Version } = require('./VersionManager');
 
 const command = 'java -jar spigot.jar';
 class MCServer {
 
     /**
      * @param  {String} name the servers referencing name
-     * @param  {String} cwd='.path.join(process.cwd(), 'CloudData/spigot-Server')'
+     * @param  {Version} version the servers version
+     * @param  {String} cwd=path.join(process.cwd(), 'CloudData/spigot-Server')
      * @param  {import('./ServerProperties').ServerObjectProperties} serverProperties the server.properties
      * @param  {String} startupParameters the server.properties
      */
-    constructor(name, cwd = path.join(process.cwd(), 'CloudData/spigot-Server'), serverProperties = {}, startupParameters) {
+    constructor(name, version, cwd = path.join(process.cwd(), 'CloudData/spigot-Server'), serverProperties = {}, startupParameters) {
         this.name = name;
+        this.version = version;
         this.cwd = cwd;
         /**
          * @type {ServerProperties}
@@ -28,6 +31,11 @@ class MCServer {
         fs.mkdirSync(this.cwd, { recursive: true });
         this.createEula();
         fs.writeFileSync(path.join(this.cwd, 'server.properties'), this.serverProperties.out());
+
+        if (this.version.versionmanager.folder == null) {
+            this.version.download(this.cwd);
+        }
+
     }
 
     addListeners() {
