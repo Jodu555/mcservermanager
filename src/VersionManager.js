@@ -74,7 +74,9 @@ class Version {
                 const builds = (await axios.get(`https://papermc.io/api/v2/projects/paper/versions/${this.version}`)).data.builds;
                 const build = builds.pop()
                 console.log(build);
-
+                const name = `${this.type}-${this.version}-${this.build}`;
+                const downloadURL = `https://papermc.io/api/v2/projects/paper/versions/${this.version}/builds/${build}/downloads/${name}`;
+                return downloadURL;
             } break;
 
             default:
