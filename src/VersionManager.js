@@ -15,16 +15,16 @@ class VersionManager {
         this.folder = folder;
     }
 
-    get(type = 'spigot', version = '1.18.1') {
+    async get(type = 'spigot', version = '1.18.1') {
         if (!(type == 'spigot' || type == 'paper'))
             throw new Error(`This api currently only supports spigot or paper versions! And not ${type}! If you want other pls contact me!`);
 
         const effectiveVersion = version.split('.')[1];
         const javaVersion = effectiveVersion > 16 ? javaVersions['17'] : javaVersions['8'];
 
-        if (!this.checkIfJavaVersionIsInstalled(javaVersion)) {
+        if (!await this.checkIfJavaVersionIsInstalled(javaVersion)) {
             console.log(`The Java Version for the minecraft version ${type}-${version} : ${javaVersion}! Is not installed yet! It will be installed!`);
-            //Install Version
+            await this.installJavaVersion(javaVersion)
         }
 
         //Use Version
@@ -37,8 +37,9 @@ class VersionManager {
     //sdk install java <version>
     //sdk use java <version>
 
-    installJavaVersion(version) {
-
+    async installJavaVersion(version) {
+        const lines = await executeCommand(process.cwd(), `sdk install java <version>`);
+        return lines;
     }
 
     async checkIfJavaVersionIsInstalled(version) {
