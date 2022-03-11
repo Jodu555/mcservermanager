@@ -21,7 +21,8 @@ const veM = new VersionManager('test');
 // veM.get('spigot', '1.15.1');
 // veM.get('spigot', '1.15');
 
-const v = new Version(null, 'spigot', '1.16.1', null);
+// const v = new Version(null, 'spigot', '1.16.1', null);
+const v = new Version(null, 'paper', '1.16.1', null);
 
 // v.download('https://download.getbukkit.org/spigot/spigot-1.17.1.jar', process.cwd());
 

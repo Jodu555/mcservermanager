@@ -71,6 +71,9 @@ class Version {
                 return info.downloadURL;
             } break;
             case 'paper': {
+                const builds = (await axios.get(`https://papermc.io/api/v2/projects/paper/versions/${this.version}`)).data.builds;
+                const build = builds.pop()
+                console.log(build);
 
             } break;
 
