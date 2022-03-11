@@ -10,7 +10,7 @@ const javaVersions = {
 }
 
 class VersionManager {
-    constructor(folder) {
+    constructor(folder = null) {
         this.folder = folder;
     }
 
