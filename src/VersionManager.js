@@ -21,8 +21,27 @@ class VersionManager {
         const effectiveVersion = version.split('.')[1];
         const javaVersion = effectiveVersion > 16 ? javaVersions['17'] : javaVersions['8'];
 
+        if (!this.checkIfJavaVersionIsInstalled(javaVersion)) {
+            console.log(`The Java Version for the minecraft version ${type}-${version} : ${javaVersion}! Is not installed yet! It will be installed!`);
+            //Install Version
+        }
+
+        //Use Version
+
         console.log(version, effectiveVersion, javaVersion);
         return new Version(this, type, version, javaVersion)
+    }
+
+    //sdk list java | grep installed
+    //sdk install java <version>
+    //sdk use java <version>
+
+    installJavaVersion(version) {
+
+    }
+
+    checkIfJavaVersionIsInstalled(version) {
+
     }
 
 }
