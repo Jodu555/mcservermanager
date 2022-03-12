@@ -5,6 +5,13 @@ const { VersionManager, Version } = require("./src/VersionManager");
 
 const veM = new VersionManager();
 
+var isWin = /^win/.test(process.platform);
+
+if (!isWin) {
+    console.log('not Windows');
+    process.env.PATH = process.env.PATH + ':/usr/local/bin';
+}
+
 // veM.get('spigot', '1.18.1');
 // veM.get('spigot', '1.18');
 // veM.get('spigot', '1.17.1');
@@ -28,8 +35,24 @@ const veM = new VersionManager();
 
 (async () => {
 
+    const { exec } = require('child_process');
 
-    console.log(await executeCommand(process.cwd(), 'echo "$SHELL" && type sdk'));
+    const ls = exec('cat ~/.bashrc', { shell: '/bin/bash' }, function (error, stdout, stderr) {
+        if (error) {
+            console.log(error.stack);
+            console.log('Error code: ' + error.code);
+            console.log('Signal received: ' + error.signal);
+        }
+        console.log('Child Process STDOUT: ' + stdout);
+        console.log('Child Process STDERR: ' + stderr);
+    });
+
+    ls.on('exit', function (code) {
+        console.log('Child process exited with exit code ' + code);
+    });
+
+
+    // console.log(await executeCommand(process.cwd(), 'echo "$SHELL" && bash && sdk'));
 
     return;
 

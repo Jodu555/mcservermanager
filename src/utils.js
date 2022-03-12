@@ -6,11 +6,12 @@ const child_process = require('child_process');
  */
 const executeCommand = async (cwd, command) => {
     return await new Promise((resolve, reject) => {
-        child_process.exec(command, { encoding: 'utf8', cwd, shell: '/usd/bin/bash' }, (error, stdout, stderr) => {
+        child_process.exec(command, { encoding: 'utf8', cwd, shell: '/usr/bin/bash' }, (error, stdout, stderr) => {
             if (error) {
                 console.log(error, stdout, stderr);
                 reject(error);
             }
+            console.log(error, stdout, stderr);
             resolve([...stdout?.split('\n'), ...stderr?.split('\n')]);
         });
     })
