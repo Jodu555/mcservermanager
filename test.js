@@ -28,7 +28,9 @@ console.log(url);
 
 const server = new MCServer('Test123', veM.get('spigot', '1.8.8'), undefined, {
     port: 3737,
-})
+});
+
+server.start();
 
 
 // server.init();
