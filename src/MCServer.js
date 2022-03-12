@@ -36,7 +36,8 @@ class MCServer {
 
         this.initialized = true;
         fs.mkdirSync(this.cwd, { recursive: true });
-        this.createEula();
+
+        fs.writeFileSync(path.join(this.cwd, 'eula.txt'), 'eula=true', 'utf-8');
         fs.writeFileSync(path.join(this.cwd, 'server.properties'), this.serverProperties.out());
 
         if (fs.existsSync(path.join(this.cwd, this.version.toNiceName())))
@@ -83,7 +84,8 @@ class MCServer {
 
     async start() {
         await this.init();
-        this.process = execute(this.command + this.startupParameters, { cwd: this.cwd }, (err, stdout, stderr) => {
+        const javaUseCommand = this.version.versionmanager.installJavaVersion(this.version.javaVersion);
+        this.process = execute(`${javaUseCommand} && ${this.command}` + this.startupParameters, { cwd: this.cwd }, (err, stdout, stderr) => {
             if (err) {
                 console.error('Server:start Error: ', err);
                 return;
@@ -103,9 +105,6 @@ class MCServer {
             console.log('Error catched!');
             console.error(error);
         }
-    }
-    createEula() {
-        fs.writeFileSync(path.join(this.cwd, 'eula.txt'), 'eula=true', 'utf-8');
     }
 }
 

@@ -36,8 +36,7 @@ class VersionManager {
     //sdk use java <version>
 
     async installJavaVersion(version) {
-        const lines = await executeCommand(process.cwd(), `sdk install java <version>`);
-        return lines;
+        return `sdk install java ${version}`;
     }
 
     async checkIfJavaVersionIsInstalled(version) {
