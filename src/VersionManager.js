@@ -41,6 +41,7 @@ class VersionManager {
 
     async checkIfJavaVersionIsInstalled(version) {
         const lines = await executeCommand(process.cwd(), `sdk list java | grep installed`);
+        console.log(lines, version);
         const found = lines.find(e => e.includes(version));
         return Boolean(found);
     }
