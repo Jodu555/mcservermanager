@@ -36,6 +36,11 @@ if (!isWin) {
         server.stop();
     }
 
+
+    // [`exit`, `SIGINT`, `SIGUSR1`, `SIGUSR2`, `uncaughtException`, `SIGTERM`].forEach((eventType) => {
+    //     process.on(eventType, exitHandler.bind(null, { exit: true }));
+    // })
+
     //do something when app is closing
     process.on('exit', exitHandler.bind(null, { cleanup: true }));
 
@@ -48,10 +53,6 @@ if (!isWin) {
 
     //catches uncaught exceptions
     process.on('uncaughtException', exitHandler.bind(null, { exit: true }));
-
-    // console.log(await executeInteractiveCommand(process.cwd(), 'sdk'));
-
-    // return;
 
     const version = await veM.get('spigot', '1.8.8');
 
