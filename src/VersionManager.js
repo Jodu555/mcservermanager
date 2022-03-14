@@ -75,7 +75,7 @@ class Version {
                 const info = response.data.find(e => e.version == this.version);
                 if (!info)
                     throw new Error(`It seems the version you inserted dont exist! ${this.version} with type: ${this.type}! If it does pls contact me`)
-                return info.downloadURL;
+                return info.downloadUrl;
             } break;
             case 'paper': {
                 const builds = (await axios.get(`https://papermc.io/api/v2/projects/paper/versions/${this.version}`)).data.builds;
@@ -99,17 +99,13 @@ class Version {
 
     async download(location) {
         const name = this.toNiceName();
-
         const dlPath = path.join(location, name)
 
         if (fs.existsSync(dlPath))
             return;
 
-
         const url = await this.generateDownloadURL();
         const writer = fs.createWriteStream(dlPath)
-
-        console.log('Trie to dl url: ', url, this);
 
         const response = await axios.get(url, { responseType: 'stream' })
         response.data.pipe(writer);
@@ -120,8 +116,8 @@ class Version {
             reject(err);
         });
         writer.on('close', () => {
-            if (!error) {
-                console.log('Failed to Download version ' + url, error);
+            if (error) {
+                throw new Error('Failed to Download version ' + url, error);
             }
         });
     }
