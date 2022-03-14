@@ -29,30 +29,16 @@ if (!isWin) {
 
     process.stdin.resume();//so the program will not close instantly
 
-    function exitHandler(options, exitCode) {
-        if (options.cleanup) console.log('clean');
-        if (exitCode || exitCode === 0) console.log(420, exitCode);
-        if (options.exit) process.exit();
-        server.stop();
-    }
-
-
-    // [`exit`, `SIGINT`, `SIGUSR1`, `SIGUSR2`, `uncaughtException`, `SIGTERM`].forEach((eventType) => {
-    //     process.on(eventType, exitHandler.bind(null, { exit: true }));
-    // })
-
-    //do something when app is closing
-    process.on('exit', exitHandler.bind(null, { cleanup: true }));
-
-    //catches ctrl+c event
-    process.on('SIGINT', exitHandler.bind(null, { exit: true }));
-
-    // catches "kill pid" (for example: nodemon restart)
-    process.on('SIGUSR1', exitHandler.bind(null, { exit: true }));
-    process.on('SIGUSR2', exitHandler.bind(null, { exit: true }));
-
-    //catches uncaught exceptions
-    process.on('uncaughtException', exitHandler.bind(null, { exit: true }));
+    //exit: do something when app is closing
+    //SIGINT: catches ctrl+c event
+    // SIGUSR1 / SIGUSR2: catches "kill pid" (for example: nodemon restart)
+    // uncaughtException: catches uncaught exceptions
+    [`exit`, `SIGINT`, `SIGUSR1`, `SIGUSR2`, `uncaughtException`, `SIGTERM`].forEach((eventType) => {
+        process.on(eventType, () => {
+            console.log(`Process Stopped from: ${eventType}! Stopping all current active Servers!`);
+            server.stop();
+        });
+    });
 
     const version = await veM.get('spigot', '1.8.8');
 
