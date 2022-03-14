@@ -84,7 +84,7 @@ class MCServer {
 
     async start() {
         await this.init();
-        const javaUseCommand = this.version.versionmanager.installJavaVersion(this.version.javaVersion);
+        const javaUseCommand = this.version.versionmanager.useJavaVersion(this.version.javaVersion);
         this.process = execute(`${javaUseCommand} && ${this.command}` + this.startupParameters, { cwd: this.cwd }, (err, stdout, stderr) => {
             if (err) {
                 console.error('Server:start Error: ', err);

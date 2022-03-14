@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
-const { executeCommand } = require('./utils');
+const { executeInteractiveCommand } = require('./utils');
 
 const javaVersions = {
     8: '8.0.302-open',
@@ -36,14 +36,18 @@ class VersionManager {
     //sdk use java <version>
 
     async installJavaVersion(version) {
-        return `sdk install java ${version}`;
+        await executeInteractiveCommand(process.cwd(), `sdk install java ${version}`);
     }
 
     async checkIfJavaVersionIsInstalled(version) {
-        const lines = await executeCommand(process.cwd(), `sdk list java | grep installed`);
+        const lines = await executeInteractiveCommand(process.cwd(), `sdk list java | grep installed`);
         console.log(lines, version);
         const found = lines.find(e => e.includes(version));
         return Boolean(found);
+    }
+
+    async useJavaVersion(version) {
+        //TODO: Somehow spawn a shell and reset the path
     }
 
 }
