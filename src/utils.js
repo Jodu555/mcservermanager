@@ -17,7 +17,11 @@ const executeCommand = async (cwd, command) => {
     })
 }
 
-
+/**
+ * @param  {String} cwd
+ * @param  {String} command
+ * @returns {Promise<String[]>}
+ */
 const executeInteractiveCommand = async (cwd, command) => {
     return await new Promise((resolve, reject) => {
         const output = [];
@@ -33,9 +37,10 @@ const executeInteractiveCommand = async (cwd, command) => {
 
         process.stdin.write(`${command}\n`);
         process.stdin.end();
-    })
+    });
 }
 
 module.exports = {
-    executeCommand
+    executeCommand,
+    executeInteractiveCommand
 }
