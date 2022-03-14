@@ -107,19 +107,23 @@ class Version {
         const url = await this.generateDownloadURL();
         const writer = fs.createWriteStream(dlPath)
 
-        const response = await axios.get(url, { responseType: 'stream' })
-        response.data.pipe(writer);
-        let error = null;
-        writer.on('error', err => {
-            error = err;
-            writer.close();
-            reject(err);
-        });
-        writer.on('close', () => {
-            if (error) {
-                throw new Error('Failed to Download version ' + url, error);
-            }
-        });
+        return await new Promise((resolve, reject) => {
+            const response = await axios.get(url, { responseType: 'stream' })
+            response.data.pipe(writer);
+            let error = null;
+            writer.on('error', err => {
+                error = err;
+                writer.close();
+                reject(err);
+            });
+            writer.on('close', () => {
+                if (error) {
+                    reject(new Error('Failed to Download version ' + url, error));
+                }
+                resolve();
+            });
+        })
+
     }
 }
 

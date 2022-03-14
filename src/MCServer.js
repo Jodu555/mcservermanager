@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path');
 const execute = require('child_process').exec;
+const child_process = require('child_process');
 const ServerProperties = require('./ServerProperties');
 const { Version } = require('./VersionManager');
 class MCServer {
@@ -34,7 +35,6 @@ class MCServer {
         if (this.initialized)
             return;
 
-        console.log('DOS');
         this.initialized = true;
         fs.mkdirSync(this.cwd, { recursive: true });
 
@@ -42,7 +42,6 @@ class MCServer {
         fs.writeFileSync(path.join(this.cwd, 'server.properties'), this.serverProperties.out());
 
 
-        console.log('DRES');
         if (fs.existsSync(path.join(this.cwd, this.version.toNiceName())))
             return;
 
@@ -57,6 +56,9 @@ class MCServer {
     }
 
     addListeners() {
+
+        this.process.stderr.on('data', (data) => console.log(data.toString()));
+
         this.process.stdout.on('data', (data) => {
             data = data.toString().split(/(\r?\n)/g);
             data.forEach((_, index) => {
@@ -73,6 +75,12 @@ class MCServer {
         }
         this.process.on('close', stop);
         this.process.on('exit', stop);
+
+        this.process.stdout.on('close', stop);
+        this.process.stderr.on('close', stop);
+
+        this.process.stdout.on('error', stop);
+        this.process.stderr.on('close', stop);
     }
     /**
      * @param  {String} command the command
@@ -88,27 +96,31 @@ class MCServer {
     }
 
     async start() {
-        console.log('UNO');
 
         await this.init();
-        console.log('QUADRO');
         const javaUseCommand = await this.version.versionmanager.useJavaVersion(this.version.javaVersion);
-        console.log('SIENCO', javaUseCommand);
-        const finalCommand = `bash -i && ${javaUseCommand} && ${this.command}` + (this.startupParameters || '');
-        console.log('SIETE', finalCommand);
-        this.process = execute(finalCommand, { cwd: this.cwd }, (err, stdout, stderr) => {
-            if (err) {
-                console.error('Server:start Error: ', err);
-                return;
-            }
-            if (stderr) {
-                console.error('Server:start Error: ', stderr);
-                return;
-            }
-            if (stdout) {
-                console.log('LOG OUTPUT: ', stdout);
-            }
-        });
+        console.log('UNO', javaUseCommand);
+        const finalCommand = `${this.command}` + (this.startupParameters || '');
+        console.log('DOS', finalCommand);
+
+        this.process = child_process.spawn('bash', ['-i'], { encoding: 'utf8', cwd: this.cwd });
+
+        this.process.stdin.write(`${javaUseCommand}\n`);
+        this.process.stdin.write(`${finalCommand}\n`);
+
+        // this.process = execute(finalCommand, { cwd: this.cwd }, (err, stdout, stderr) => {
+        //     if (err) {
+        //         console.error('Server:start Error: ', err);
+        //         return;
+        //     }
+        //     if (stderr) {
+        //         console.error('Server:start Error: ', stderr);
+        //         return;
+        //     }
+        //     if (stdout) {
+        //         console.log('LOG OUTPUT: ', stdout);
+        //     }
+        // });
 
         try {
             this.addListeners();
