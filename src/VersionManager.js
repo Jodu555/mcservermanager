@@ -98,7 +98,7 @@ class Version {
     }
 
     async download(location) {
-        const name = this.toNiceName();
+        const name = `${this.toNiceName()}.jar`;
         const dlPath = path.join(location, name)
 
         if (fs.existsSync(dlPath))
