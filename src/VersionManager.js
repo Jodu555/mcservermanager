@@ -47,6 +47,7 @@ class VersionManager {
     }
 
     async useJavaVersion(version) {
+        return `sdk use java ${version}`;
         //TODO: Somehow spawn a shell and reset the path
     }
 
