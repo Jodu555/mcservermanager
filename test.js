@@ -35,9 +35,9 @@ if (!isWin) {
 
 (async () => {
 
-    console.log(await executeInteractiveCommand(process.cwd(), 'sdk'));
+    // console.log(await executeInteractiveCommand(process.cwd(), 'sdk'));
 
-    return;
+    // return;
 
     const version = await veM.get('spigot', '1.8.8');
 

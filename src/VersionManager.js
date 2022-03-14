@@ -107,6 +107,9 @@ class Version {
 
         const url = await this.generateDownloadURL();
         const writer = fs.createWriteStream(dlPath)
+
+        console.log('Trie to dl url: ', url, this);
+
         const response = await axios.get(url, { responseType: 'stream' })
         response.data.pipe(writer);
         let error = null;
