@@ -25,15 +25,29 @@ if (!isWin) {
 // veM.get('spigot', '1.15.1');
 // veM.get('spigot', '1.15');
 
-// const v = new Version(null, 'spigot', '1.16.1', null);
-// const v = new Version(null, 'paper', '1.16.1', null);
-
-// v.download('https://download.getbukkit.org/spigot/spigot-1.17.1.jar', process.cwd());
-
-// const url = v.generateDownloadURL();
-// console.log(url);
-
 (async () => {
+
+    process.stdin.resume();//so the program will not close instantly
+
+    function exitHandler(options, exitCode) {
+        if (options.cleanup) console.log('clean');
+        if (exitCode || exitCode === 0) console.log(420, exitCode);
+        if (options.exit) process.exit();
+        server.stop();
+    }
+
+    //do something when app is closing
+    process.on('exit', exitHandler.bind(null, { cleanup: true }));
+
+    //catches ctrl+c event
+    process.on('SIGINT', exitHandler.bind(null, { exit: true }));
+
+    // catches "kill pid" (for example: nodemon restart)
+    process.on('SIGUSR1', exitHandler.bind(null, { exit: true }));
+    process.on('SIGUSR2', exitHandler.bind(null, { exit: true }));
+
+    //catches uncaught exceptions
+    process.on('uncaughtException', exitHandler.bind(null, { exit: true }));
 
     // console.log(await executeInteractiveCommand(process.cwd(), 'sdk'));
 
@@ -47,11 +61,3 @@ if (!isWin) {
 
     await server.start();
 })();
-
-
-
-
-// server.init();
-
-
-// createMCServerManager()

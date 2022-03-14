@@ -74,13 +74,12 @@ class Version {
                 const response = await axios.get('https://raw.githubusercontent.com/Jodu555/MinecraftVersionScraper/master/out.json');
                 const info = response.data.find(e => e.version == this.version);
                 if (!info)
-                    throw new Error(`It seems the version you inserted dont exist! ${this.version} with type: ${this.type}! If it does pls contact me`)
+                    throw new Error(`It seems the version you inserted dont exist! ${this.version} with type: ${this.type}! If it does pls contact me`);
                 return info.downloadUrl;
             } break;
             case 'paper': {
                 const builds = (await axios.get(`https://papermc.io/api/v2/projects/paper/versions/${this.version}`)).data.builds;
-                const build = builds.pop()
-                console.log(build);
+                const build = builds.pop();
                 const name = `${this.type}-${this.version}-${this.build}`;
                 const downloadURL = `https://papermc.io/api/v2/projects/paper/versions/${this.version}/builds/${build}/downloads/${name}`;
                 return downloadURL;
@@ -107,7 +106,7 @@ class Version {
         const url = await this.generateDownloadURL();
         const writer = fs.createWriteStream(dlPath)
 
-        return await new Promise((resolve, reject) => {
+        return await new Promise(async (resolve, reject) => {
             const response = await axios.get(url, { responseType: 'stream' })
             response.data.pipe(writer);
             let error = null;

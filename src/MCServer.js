@@ -57,7 +57,7 @@ class MCServer {
 
     addListeners() {
 
-        this.process.stderr.on('data', (data) => console.log(data.toString()));
+        this.process.stderr.on('data', (data) => console.log(666, data.toString()));
 
         this.process.stdout.on('data', (data) => {
             data = data.toString().split(/(\r?\n)/g);
@@ -65,7 +65,6 @@ class MCServer {
                 var line = data[index].trim();
                 if (line !== '\n' && line !== '') {
                     this.logs.push(line);
-                    console.log('LOG:', line);
                 }
             });
         });
@@ -107,20 +106,6 @@ class MCServer {
 
         this.process.stdin.write(`${javaUseCommand}\n`);
         this.process.stdin.write(`${finalCommand}\n`);
-
-        // this.process = execute(finalCommand, { cwd: this.cwd }, (err, stdout, stderr) => {
-        //     if (err) {
-        //         console.error('Server:start Error: ', err);
-        //         return;
-        //     }
-        //     if (stderr) {
-        //         console.error('Server:start Error: ', stderr);
-        //         return;
-        //     }
-        //     if (stdout) {
-        //         console.log('LOG OUTPUT: ', stdout);
-        //     }
-        // });
 
         try {
             this.addListeners();
