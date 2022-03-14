@@ -17,6 +17,25 @@ const executeCommand = async (cwd, command) => {
     })
 }
 
+
+const executeInteractiveCommand = async (cwd, command) => {
+    return await new Promise((resolve, reject) => {
+        const output = [];
+        const process = child_process.spawn('bash', ['-i'], { encoding: 'utf8', cwd, shell: '/usr/bin/bash' });
+        process.stdout.on('data', (data) => output.push(data.toString()));
+        process.stderr.on('data', (data) => output.push(data.toString()));
+
+        process.stdout.on('close', (data) => resolve(output));
+        process.stderr.on('close', (data) => resolve(output));
+
+        process.stdout.on('error', (data) => reject(output));
+        process.stderr.on('close', (data) => reject(output));
+
+        process.stdin.write(`${command}\n`);
+        process.stdin.end();
+    })
+}
+
 module.exports = {
     executeCommand
 }
