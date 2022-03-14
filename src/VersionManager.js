@@ -27,7 +27,7 @@ class VersionManager {
 
         //Use Version
 
-        console.log(version, effectiveVersion, javaVersion);
+        console.log(1245, version, effectiveVersion, javaVersion);
         return new Version(this, type, version, javaVersion)
     }
 
@@ -41,7 +41,7 @@ class VersionManager {
 
     async checkIfJavaVersionIsInstalled(version) {
         const lines = await executeInteractiveCommand(process.cwd(), `sdk list java | grep installed`);
-        console.log(lines, version);
+        console.log(7878, lines, version);
         const found = lines.find(e => e.includes(version));
         return Boolean(found);
     }
@@ -84,6 +84,7 @@ class Version {
                 const name = `${this.type}-${this.version}-${this.build}`;
                 const downloadURL = `https://papermc.io/api/v2/projects/paper/versions/${this.version}/builds/${build}/downloads/${name}`;
                 return downloadURL;
+
             } break;
 
             default:

@@ -60,6 +60,7 @@ class MCServer {
                 var line = data[index].trim();
                 if (line !== '\n' && line !== '') {
                     this.logs.push(line);
+                    console.log('LOG:', line);
                 }
             });
         });
@@ -79,6 +80,7 @@ class MCServer {
     }
 
     stop() {
+        console.log('Stopped');
         this.process.kill('SIGINT');
     }
 
