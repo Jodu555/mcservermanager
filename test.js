@@ -38,7 +38,7 @@ if (!isWin) {
     const logs = [
         '[09:05:50] [Async Chat Thread - #0/INFO]: <Jodu555> lol',
         '[09:05:52] [Server thread/INFO]: Jodu555 issued server command: /tps',
-        '[11:01:00] [Async Chat Thread - #1/INFO]: <JoduCoding> tes[m',
+        '[11:01:00] [Async Chat Thread - #1/INFO]: <JoduCoding> test',
         '[11:01:03] [Server thread/INFO]: JoduCoding issued server command: /tps',
         '[11:01:23] [User Authenticator #10/INFO]: UUID of player Jodu555 is 076b1e9c-3771-4e84-b1c7-0638514aba2e',
         '[11:01:23] [Server thread/INFO]: Jodu555[/0.0.0.0:9905] logged in with entity id 1157 at ([world]-256.2177770048223, 94.0, 247.69999998807907)'
@@ -50,11 +50,27 @@ if (!isWin) {
         log = log.replace(bracketRegex, '');
 
         const [thread, level] = multiReplacer(log.match(bracketRegex)[0], '', '[', ']').split('/');
-        log = log.replace(bracketRegex, '');
+        log = log.replace(bracketRegex, '').split(':')[1];
 
         const player = multiReplacer(log.match(chatRegex)?.[0], '', '<', '>') || null;
+        log = log.replace(chatRegex, '');
 
-        console.log({ time, thread, level, log, player });
+        if (!player) {
+            //NO Chat
+            if (log.includes('Issued Server Command')) {
+                //Command Execution
+                // [11:01:03] [Server thread/INFO]: JoduCoding issued server command: /tps
+            }
+            if (log.includes('logged in')) {
+                //Login
+                // [11:01:23] [Server thread/INFO]: Jodu555[/0.0.0.0:9905] logged in with entity id 1157 at ([world]-256, 94.0, 247)
+            }
+        } else {
+            //YES Chat
+            log = log.trim();
+            console.log({ time, info: { thread, level }, player, log });
+        }
+
     });
 
 
