@@ -27,6 +27,20 @@ if (!isWin) {
 
 (async () => {
 
+    const logs = [
+        '[09:05:50] [Async Chat Thread - #0/INFO]: <Jodu555> lol',
+        '[09:05:52] [Server thread/INFO]: Jodu555 issued server command: /tps'
+    ];
+
+    logs.forEach(log => {
+        let num = log.search(new RegExp('[*+]'));
+        console.log(num);
+    });
+
+
+
+    return;
+
     process.stdin.resume();//so the program will not close instantly
 
     //exit: do something when app is closing
