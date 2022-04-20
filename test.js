@@ -41,7 +41,8 @@ if (!isWin) {
         '[11:01:00] [Async Chat Thread - #1/INFO]: <JoduCoding> test',
         '[11:01:03] [Server thread/INFO]: JoduCoding issued server command: /tps',
         '[11:01:23] [User Authenticator #10/INFO]: UUID of player Jodu555 is 076b1e9c-3771-4e84-b1c7-0638514aba2e',
-        '[11:01:23] [Server thread/INFO]: Jodu555[/0.0.0.0:9905] logged in with entity id 1157 at ([world]-256.2177770048223, 94.0, 247.69999998807907)'
+        '[11:01:23] [Server thread/INFO]: Jodu555[/0.0.0.0:9905] logged in with entity id 1157 at ([world]-256.2177770048223, 94.0, 247.69999998807907)',
+        '[23:30:05] [Server thread/INFO]: Jodu555 lost connection: Disconnected'
     ];
     const bracketRegex = /\[.*?\]/m;
     const chatRegex = /\<.*?\>/m;
@@ -64,6 +65,10 @@ if (!isWin) {
             if (log.includes('logged in')) {
                 //Login
                 // [11:01:23] [Server thread/INFO]: Jodu555[/0.0.0.0:9905] logged in with entity id 1157 at ([world]-256, 94.0, 247)
+            }
+            if (log.includes('lost connection')) {
+                //Logout
+                // [23:30:05] [Server thread/INFO]: Jodu555 lost connection: Disconnected
             }
         } else {
             //YES Chat
