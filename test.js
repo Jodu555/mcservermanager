@@ -42,7 +42,12 @@ if (!isWin) {
         '[11:01:03] [Server thread/INFO]: JoduCoding issued server command: /tps',
         '[11:01:23] [User Authenticator #10/INFO]: UUID of player Jodu555 is 076b1e9c-3771-4e84-b1c7-0638514aba2e',
         '[11:01:23] [Server thread/INFO]: Jodu555[/0.0.0.0:9905] logged in with entity id 1157 at ([world]-256.2177770048223, 94.0, 247.69999998807907)',
-        '[23:30:05] [Server thread/INFO]: Jodu555 lost connection: Disconnected'
+        '[23:30:05] [Server thread/INFO]: Jodu555 lost connection: Disconnected',
+        '[23:41:34] [Thread-16/INFO]: UUID of player Editfusee is 79f06bc9-99f8-4bd0-8715-3edf48756014',
+        '[23:41:34] [Netty Epoll Server IO #2/WARN]: [ViaVersion] Ignoring plugin channel in outgoing REGISTER: WECUI',
+        '[23:41:34] [Server thread/INFO]: Editfusee[/95.90.242.39:50159] logged in with entity id 2459 at ([world]-0.6621907329410326, 4.0, 0.6181414894586275)',
+        '[23:41:36] [Server thread/INFO]: Editfusee issued server command: /pl',
+        '[23:42:52] [Server thread/INFO]: Editfusee issued server command: /build',
     ];
     const bracketRegex = /\[.*?\]/m;
     const chatRegex = /\<.*?\>/m;
