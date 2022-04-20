@@ -45,7 +45,7 @@ if (!isWin) {
         '[23:30:05] [Server thread/INFO]: Jodu555 lost connection: Disconnected',
         '[23:41:34] [Thread-16/INFO]: UUID of player Editfusee is 79f06bc9-99f8-4bd0-8715-3edf48756014',
         '[23:41:34] [Netty Epoll Server IO #2/WARN]: [ViaVersion] Ignoring plugin channel in outgoing REGISTER: WECUI',
-        '[23:41:34] [Server thread/INFO]: Editfusee[/95.90.242.39:50159] logged in with entity id 2459 at ([world]-0.6621907329410326, 4.0, 0.6181414894586275)',
+        '[23:41:34] [Server thread/INFO]: Editfusee[/1.1.1.1:50159] logged in with entity id 2459 at ([world]-0.6621907329410326, 4.0, 0.6181414894586275)',
         '[23:41:36] [Server thread/INFO]: Editfusee issued server command: /pl',
         '[23:42:52] [Server thread/INFO]: Editfusee issued server command: /build',
     ];
