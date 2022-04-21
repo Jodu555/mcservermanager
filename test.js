@@ -27,6 +27,11 @@ if (!isWin) {
 
 (async () => {
 
+
+    console.log(splitAtIndex('Hello: i testit, toto: sao', ':', 0));
+
+    return;
+
     function multiReplacer(string, replacor, ...param) {
         if (!string)
             return string;
@@ -34,6 +39,14 @@ if (!isWin) {
         return string;
     }
 
+    function splitAtIndex(str, splitter, idx) {
+        const arr = [];
+        str.split(splitter).forEach((l, i) => {
+            if (i > idx)
+                arr.push(l);
+        });
+        return arr.join(splitter);
+    }
 
     const logs = [
         '[09:05:50] [Async Chat Thread - #0/INFO]: <Jodu555> lol',
@@ -56,18 +69,16 @@ if (!isWin) {
         log = log.replace(bracketRegex, '');
 
         const [thread, level] = multiReplacer(log.match(bracketRegex)[0], '', '[', ']').split('/');
-        console.log(1, log.replace(bracketRegex, '').split(':'));
-        log = log.replace(bracketRegex, '').split(':')[1];
+        log = splitAtIndex(log.replace(bracketRegex, ''), ':', 0).trim();
 
-        console.log(1337, log);
 
         const player = multiReplacer(log.match(chatRegex)?.[0], '', '<', '>') || null;
         log = log.replace(chatRegex, '');
 
         if (!player) {
             //NO Chat
-            // console.log(2, log);
-            if (log.includes('issued Server command:')) {
+            console.log(1337, log);
+            if (log.includes('issued server command:')) {
                 //Command Execution
                 // [11:01:03] [Server thread/INFO]: JoduCoding issued server command: /tps
                 console.log('Got Command Execution');
