@@ -1,3 +1,4 @@
+const LogParser = require("./src/LogParser");
 const MCServer = require("./src/MCServer");
 const ServerProperties = require("./src/ServerProperties");
 const { executeCommand, executeInteractiveCommand } = require("./src/utils");
@@ -27,27 +28,6 @@ if (!isWin) {
 
 (async () => {
 
-
-    console.log(splitAtIndex('Hello: i testit, toto: sao', ':', 0));
-
-    return;
-
-    function multiReplacer(string, replacor, ...param) {
-        if (!string)
-            return string;
-        param.forEach(p => string = string.replace(p, replacor));
-        return string;
-    }
-
-    function splitAtIndex(str, splitter, idx) {
-        const arr = [];
-        str.split(splitter).forEach((l, i) => {
-            if (i > idx)
-                arr.push(l);
-        });
-        return arr.join(splitter);
-    }
-
     const logs = [
         '[09:05:50] [Async Chat Thread - #0/INFO]: <Jodu555> lol',
         '[09:05:52] [Server thread/INFO]: Jodu555 issued server command: /tps',
@@ -64,44 +44,11 @@ if (!isWin) {
     ];
     const bracketRegex = /\[.*?\]/m;
     const chatRegex = /\<.*?\>/m;
+
+    const parser = new LogParser();
     logs.forEach(log => {
-        const time = log.match(bracketRegex)[0];
-        log = log.replace(bracketRegex, '');
-
-        const [thread, level] = multiReplacer(log.match(bracketRegex)[0], '', '[', ']').split('/');
-        log = splitAtIndex(log.replace(bracketRegex, ''), ':', 0).trim();
-
-
-        const player = multiReplacer(log.match(chatRegex)?.[0], '', '<', '>') || null;
-        log = log.replace(chatRegex, '');
-
-        if (!player) {
-            //NO Chat
-            console.log(1337, log);
-            if (log.includes('issued server command:')) {
-                //Command Execution
-                // [11:01:03] [Server thread/INFO]: JoduCoding issued server command: /tps
-                console.log('Got Command Execution');
-            }
-            if (log.includes('logged in')) {
-                //Login
-                // [11:01:23] [Server thread/INFO]: Jodu555[/0.0.0.0:9905] logged in with entity id 1157 at ([world]-256, 94.0, 247)
-                console.log('Got Log in');
-            }
-            if (log.includes('lost connection')) {
-                //Logout
-                // [23:30:05] [Server thread/INFO]: Jodu555 lost connection: Disconnected
-                console.log('Got Log out');
-            }
-        } else {
-            //YES Chat
-            log = log.trim();
-            // console.log({ time, info: { thread, level }, player, log });
-        }
-
+        parser.parse(log);
     });
-
-
 
     return;
 
