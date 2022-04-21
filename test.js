@@ -56,29 +56,36 @@ if (!isWin) {
         log = log.replace(bracketRegex, '');
 
         const [thread, level] = multiReplacer(log.match(bracketRegex)[0], '', '[', ']').split('/');
+        console.log(1, log.replace(bracketRegex, '').split(':'));
         log = log.replace(bracketRegex, '').split(':')[1];
+
+        console.log(1337, log);
 
         const player = multiReplacer(log.match(chatRegex)?.[0], '', '<', '>') || null;
         log = log.replace(chatRegex, '');
 
         if (!player) {
             //NO Chat
-            if (log.includes('Issued Server Command')) {
+            // console.log(2, log);
+            if (log.includes('issued Server command:')) {
                 //Command Execution
                 // [11:01:03] [Server thread/INFO]: JoduCoding issued server command: /tps
+                console.log('Got Command Execution');
             }
             if (log.includes('logged in')) {
                 //Login
                 // [11:01:23] [Server thread/INFO]: Jodu555[/0.0.0.0:9905] logged in with entity id 1157 at ([world]-256, 94.0, 247)
+                console.log('Got Log in');
             }
             if (log.includes('lost connection')) {
                 //Logout
                 // [23:30:05] [Server thread/INFO]: Jodu555 lost connection: Disconnected
+                console.log('Got Log out');
             }
         } else {
             //YES Chat
             log = log.trim();
-            console.log({ time, info: { thread, level }, player, log });
+            // console.log({ time, info: { thread, level }, player, log });
         }
 
     });
