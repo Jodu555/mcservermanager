@@ -23,16 +23,19 @@ class LogParser {
                 //Command Execution
                 // [11:01:03] [Server thread/INFO]: JoduCoding issued server command: /tps
                 console.log('Got Command Execution');
+                console.log(log.split(' ')[0]);
             }
             if (log.includes('logged in')) {
                 //Login
                 // [11:01:23] [Server thread/INFO]: Jodu555[/0.0.0.0:9905] logged in with entity id 1157 at ([world]-256, 94.0, 247)
                 console.log('Got Log in');
+                console.log(log.split(' ')[0]);
             }
             if (log.includes('lost connection')) {
                 //Logout
                 // [23:30:05] [Server thread/INFO]: Jodu555 lost connection: Disconnected
                 console.log('Got Log out');
+                console.log(log.split(' ')[0]);
             }
         } else {
             //YES Chat
